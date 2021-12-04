@@ -94,7 +94,9 @@ public class View {
         }
     }
 
-    void viewRecipesPage(String recipes) {
+    String viewRecipesPage(String recipes) {
+        String result="";
+
         String[] recipe=recipes.split("\n");
         for(int i=0; i<recipe.length; i++) {
             String[] components = recipe[i].split("/");
@@ -110,7 +112,10 @@ public class View {
                 }
             }
 
-            System.out.println("Recipe Name:"+recipeName+" Recipe price:"+recipePrice);
+            result+="Recipe Name:"+recipeName+" Recipe price:"+recipePrice;
         }
+        System.out.println(result);
+
+        return result;
     }
 }

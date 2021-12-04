@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import Component.*;
 
 public class Recipe {
@@ -162,9 +165,16 @@ public class Recipe {
             }
 
 
-            System.out.println("Do you want to save?");
-            System.out.println("1. yes  2. no");
-            select=Integer.parseInt(st.nextToken());
+            while(true) {
+                System.out.println("Do you want to save?");
+                System.out.println("1. yes  2. no");
+                select = Integer.parseInt(st.nextToken());
+                if(select==1||select==2){
+                    break;
+                }else{
+                    System.out.println("Wrong input. Enter the number.");
+                }
+            }
 
             String recipeName;
             if(select==1){
@@ -250,7 +260,18 @@ public class Recipe {
         System.out.print("Select recipe for modifying(Input recipe name) : ");
         recipeName = sc.nextLine();
         System.out.println("Which component do you want to modify? ");
-        int component = view.selectComponentPage();
+        int componentNum = view.selectComponentPage();
+        int selectOperation;
+        while (true) {
+            System.out.println("1. Add  2. Delete");
+            selectOperation=sc.nextInt();
+            sc.nextLine();
+            if(selectOperation==1||selectOperation==2) {
+                break;
+            }else{
+                System.out.println("Wrong input. Enter the number.");
+            }
+        }
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
@@ -267,19 +288,75 @@ public class Recipe {
                     if(recipeInfo[1] != recipeName)
                         recipe += recipeLine + "\r\n";
                     else {
-                        switch (component) {
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                break;
-                            case 5:
-                                break;
-                            case 6:
-                                break;
+                        String beforeTargetComponent="";
+                        String targetComponent="";
+                        String afterTargetComponent="";
+
+                        for(int i=1; i<componentNum+1; i++) {
+                            beforeTargetComponent += recipeInfo[i]+"/";
+                        }
+                        targetComponent=recipeInfo[componentNum+1];
+                        for(int i=componentNum+2; i<recipeInfo.length-1; i++){
+                            afterTargetComponent += recipeInfo[i]+"/";
+                        }
+                        afterTargetComponent += recipeInfo[recipeInfo.length-1]+"\n";
+
+                        System.out.print(beforeTargetComponent+targetComponent+"/"+afterTargetComponent);
+                        if(selectOperation==1) {
+                            if(componentNum==1){
+                                component=new Size();
+                            }else if(componentNum==2){
+                                component=new Bread();
+                            }else if(componentNum==3){
+                                component=new Ingredient();
+                            }else if(componentNum==4){
+                                component=new Sauce();
+                            }else if(componentNum==5){
+                                component=new Beverage();
+                            }else if(componentNum==6){
+                                component=new Side();
+                            }
+                            else {
+                                System.out.println("Modify recipe error");
+                                return;
+                            }
+
+                            String componentAll=component.loadComponents();
+                            String[] componentList=componentAll.split("\n");
+
+                            view.viewComponentsPage(componentAll);
+                            int select=sc.nextInt();
+                            sc.nextLine();
+
+                            String[] componentInfo=componentList[select].split(",");
+                            String name=componentInfo[0];
+                            String price=componentInfo[1];
+
+                            targetComponent+=name+"_"+price+",/";
+
+                            recipeLine=beforeTargetComponent+targetComponent+afterTargetComponent;
+                            recipe += recipeLine + "\r\n";
+                        }else if(selectOperation==2){
+                            System.out.println("Input the name of what you want to delete.");
+                            String name=sc.nextLine();
+                            Pattern pattern=Pattern.compile(name+"_(([0-9])\\w+),");
+                            Matcher matcher=pattern.matcher(targetComponent);
+
+                            String willDelete="";
+                            if(matcher.find()){
+                                willDelete=matcher.group();
+                            }else{
+                                System.out.println("Modify recipe error [delete]");
+                                return;
+                            }
+                            targetComponent=targetComponent.replaceAll(willDelete, "");
+                            targetComponent+="/";
+
+                            recipeLine=beforeTargetComponent+targetComponent+afterTargetComponent;
+                            recipe += recipeLine + "\r\n";
+                        }else {
+                            System.out.println("Modify recipe error");
+                            return;
                         }
                     }
                 }
