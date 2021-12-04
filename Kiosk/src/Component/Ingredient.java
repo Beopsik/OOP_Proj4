@@ -54,7 +54,7 @@ public class Ingredient implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+        File file = new File("DB/Ingredient.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -84,7 +84,7 @@ public class Ingredient implements Component{
         setAmount(amount);
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+            File file = new File("DB/Ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -102,7 +102,7 @@ public class Ingredient implements Component{
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+            File file = new File("DB/Ingredient.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -148,7 +148,7 @@ public class Ingredient implements Component{
         }
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+            File file = new File("DB/Ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -168,7 +168,7 @@ public class Ingredient implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+            File file = new File("DB/Ingredient.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -195,7 +195,7 @@ public class Ingredient implements Component{
         list.remove(i);
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Ingredient.txt");
+            File file = new File("DB/Ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }

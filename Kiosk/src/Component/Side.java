@@ -54,7 +54,7 @@ public class Side implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+        File file = new File("DB/Side.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -84,7 +84,7 @@ public class Side implements Component{
         setAmount(amount);
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+            File file = new File("DB/Side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -103,7 +103,7 @@ public class Side implements Component{
     public void modifyComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+            File file = new File("DB/Side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -149,7 +149,7 @@ public class Side implements Component{
         }
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+            File file = new File("DB/Side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -169,7 +169,7 @@ public class Side implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+            File file = new File("DB/Side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -196,7 +196,7 @@ public class Side implements Component{
         list.remove(i);
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Side.txt");
+            File file = new File("DB/Side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
