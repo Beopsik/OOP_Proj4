@@ -54,7 +54,7 @@ public class Side implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/Side.txt");
+        File file = new File("DB/side.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -64,27 +64,26 @@ public class Side implements Component{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(contents);
         return contents;
     }
 
     @Override
     public void addComponents() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("추가할 사이드메뉴의 이름 : ");
+        System.out.print("Enter new side menu name : ");
         String str = scan.nextLine();
         setName(str);
 
-        System.out.print("추가할 사이드메뉴의 가격 : ");
+        System.out.print("Enter price of new side menu : ");
         int price = scan.nextInt();
         setPrice(price);
 
-        System.out.print("추가할 사이드메뉴의 양 : ");
+        System.out.print("Enter amount of new side menu : ");
         int amount = scan.nextInt();
         setAmount(amount);
 
         try{
-            File file = new File("DB/Side.txt");
+            File file = new File("DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -103,7 +102,7 @@ public class Side implements Component{
     public void modifyComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Side.txt");
+            File file = new File("DB/side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -116,7 +115,7 @@ public class Side implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("수정할 사이드메뉴의 이름 : ");
+        System.out.print("Enter side menu name you want to modify : ");
         String str = scan.nextLine();
         int i = 0;
         for(Component side : list){
@@ -126,30 +125,30 @@ public class Side implements Component{
             else i++;
         }
 
-        System.out.println("1. 사이드메뉴의 이름 수정하기");
-        System.out.println("2. 사이드메뉴의 가격 수정하기");
-        System.out.println("3. 사이드메뉴의 갯수 수정하기");
+        System.out.println("1. Modify side menu name");
+        System.out.println("2. Modify price of side menu");
+        System.out.println("3. Modify amount of side menu");
         System.out.print(">>");
         int input = scan.nextInt();
 
         if(input == 1){
-            System.out.print("수정한 사이드메뉴의 이름 : ");
+            System.out.print("Enter new side menu name : ");
             str = scan.nextLine();
             list.get(i).setName(str);
         }
         else if(input == 2){
-            System.out.print("수정한 사이드메뉴의 가격 : ");
+            System.out.print("Enter new price of side menu : ");
             int newprice = scan.nextInt();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
-            System.out.print("수정한 사이드메뉴의 갯수 : ");
+            System.out.print("Enter new amount of side menu : ");
             int newamount = scan.nextInt();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("DB/Side.txt");
+            File file = new File("DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -169,7 +168,7 @@ public class Side implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Side.txt");
+            File file = new File("DB/side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -182,7 +181,7 @@ public class Side implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("삭제할 사이드메뉴 이름 : ");
+        System.out.print("Enter side menu name you want to delete : ");
         String name = scan.nextLine();
         int i = 0;
 
@@ -196,7 +195,7 @@ public class Side implements Component{
         list.remove(i);
 
         try{
-            File file = new File("DB/Side.txt");
+            File file = new File("DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }

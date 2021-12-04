@@ -41,10 +41,12 @@ public class View {
                     System.out.println("2. Modify Ingredient");
                     System.out.println("3. Delete Ingredient");
                     System.out.println("4. Delete Customer Info");
+                    System.out.println("5. Logout");
                     System.out.print("Select Menu : ");
                     selectMenu = sc.nextInt();
 
-                    if(selectMenu == 1 || selectMenu == 2 || selectMenu == 3 || selectMenu == 4) {
+                    if(selectMenu == 1 || selectMenu == 2 || selectMenu == 3 ||
+                            selectMenu == 4 || selectMenu == 5) {
                         break;
                     }
                     else {
@@ -90,7 +92,7 @@ public class View {
 
         for(int i = 0;i < eachComponents.length;i++) {
             String[] componentInfo = eachComponents[i].split(",");
-            System.out.println(componentInfo[0] + " Price : " + componentInfo[1]);
+            System.out.println(componentInfo[0] + " Price : " + componentInfo[1] + " amount : " + componentInfo[2]);
         }
     }
 

@@ -54,7 +54,7 @@ public class Size implements Component {
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/Size.txt");
+        File file = new File("DB/size.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -64,27 +64,24 @@ public class Size implements Component {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(contents);
         return contents;
     }
 
     @Override
     public void addComponents() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("추가할 크기 : ");
+        System.out.print("Enter size name : ");
         String str = scan.nextLine();
         setName(str);
 
-        System.out.print("추가할 크기의 : ");
+        System.out.print("Enter new price of size : ");
         int price = scan.nextInt();
         setPrice(price);
 
-        System.out.print("추가할 크기의 양 : ");
-        int amount = scan.nextInt();
-        setAmount(amount);
+        setAmount(0);
 
         try{
-            File file = new File("DB/Size.txt");
+            File file = new File("DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -102,7 +99,7 @@ public class Size implements Component {
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Size.txt");
+            File file = new File("DB/size.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -115,7 +112,7 @@ public class Size implements Component {
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("수정할 크기 : ");
+        System.out.print("Enter size you want to modify : ");
         String str = scan.nextLine();
         int i = 0;
         for(Component size : list){
@@ -125,30 +122,24 @@ public class Size implements Component {
             else i++;
         }
 
-        System.out.println("1. 크기 수정하기");
-        System.out.println("2. 크기의 가격 수정하기");
-        System.out.println("3. 크기의 양 수정하기");
+        System.out.println("1. Modify size");
+        System.out.println("2. Modify price of size");
         System.out.print(">>");
         int input = scan.nextInt();
 
         if(input == 1){
-            System.out.print("크기 : ");
+            System.out.print("Enter new size : ");
             str = scan.nextLine();
             list.get(i).setName(str);
         }
         else if(input == 2){
-            System.out.print("크기의 가격 : ");
+            System.out.print("Enter price of new size : ");
             int newprice = scan.nextInt();
             list.get(i).setPrice(newprice);
         }
-        else if(input == 3){
-            System.out.print("크기의 양 : ");
-            int newamount = scan.nextInt();
-            list.get(i).setAmount(newamount);
-        }
 
         try{
-            File file = new File("DB/Size.txt");
+            File file = new File("DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -168,7 +159,7 @@ public class Size implements Component {
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Size.txt");
+            File file = new File("DB/size.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -181,7 +172,7 @@ public class Size implements Component {
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("삭제할 크기 : ");
+        System.out.print("Enter size you want to delete : ");
         String name = scan.nextLine();
         int i = 0;
 
@@ -195,7 +186,7 @@ public class Size implements Component {
         list.remove(i);
 
         try{
-            File file = new File("DB/Size.txt");
+            File file = new File("DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }

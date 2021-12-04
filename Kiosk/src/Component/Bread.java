@@ -55,7 +55,7 @@ public class Bread implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/Bread.txt");
+        File file = new File("DB/bread.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -65,27 +65,26 @@ public class Bread implements Component{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(contents);
         return contents;
     }
 
     @Override
     public void addComponents() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("추가할 빵의 이름 : ");
+        System.out.print("Enter new bread name : ");
         String str = scan.nextLine();
         setName(str);
 
-        System.out.print("추가할 빵의 가격 : ");
+        System.out.print("Enter price of new bread : ");
         int price = scan.nextInt();
         setPrice(price);
 
-        System.out.print("추가할 빵의 양 : ");
+        System.out.print("Enter amount of new bread : ");
         int amount = scan.nextInt();
         setAmount(amount);
 
         try{
-            File file = new File("DB/Bread.txt");
+            File file = new File("DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -103,7 +102,7 @@ public class Bread implements Component{
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Bread.txt");
+            File file = new File("DB/bread.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -116,7 +115,7 @@ public class Bread implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("수정할 빵의 이름 : ");
+        System.out.print("Enter bread name you want to modify : ");
         String str = scan.nextLine();
         int i = 0;
         for(Component bread : list){
@@ -126,30 +125,30 @@ public class Bread implements Component{
             else i++;
         }
 
-        System.out.println("1. 빵의 이름 수정하기");
-        System.out.println("2. 빵의 가격 수정하기");
-        System.out.println("3. 빵의 갯수 수정하기");
+        System.out.println("1. Modify bread name");
+        System.out.println("2. Modify price of bread");
+        System.out.println("3. Modify amount of bread");
         System.out.print(">>");
         int input = scan.nextInt();
 
         if(input == 1){
-            System.out.print("수정한 빵의 이름 : ");
+            System.out.print("Enter new bread name : ");
             str = scan.nextLine();
             list.get(i).setName(str);
         }
         else if(input == 2){
-            System.out.print("수정한 빵의 가격 : ");
+            System.out.print("Enter new price of bread : ");
             int newprice = scan.nextInt();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
-            System.out.print("수정한 빵의 갯수 : ");
+            System.out.print("Enter new amount of bread : ");
             int newamount = scan.nextInt();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("DB/Bread.txt");
+            File file = new File("DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -169,7 +168,7 @@ public class Bread implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/Bread.txt");
+            File file = new File("DB/bread.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -182,7 +181,7 @@ public class Bread implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("삭제할 빵 이름 : ");
+        System.out.print("Enter bread name you want to delete : ");
         String name = scan.nextLine();
         int i = 0;
 
@@ -196,7 +195,7 @@ public class Bread implements Component{
         list.remove(i);
 
         try{
-            File file = new File("DB/Bread.txt");
+            File file = new File("DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
