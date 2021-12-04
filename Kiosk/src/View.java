@@ -86,9 +86,6 @@ public class View {
         return selectComponent;
     }
 
-<<<<<<< Updated upstream
-    void viewComponentsPage(String components) {
-=======
     void viewComponentsPage(String components) throws IOException {
 
         BufferedReader br;
@@ -186,7 +183,6 @@ public class View {
                 br.close();
                 break;
         }
->>>>>>> Stashed changes
     }
 
     void viewRecipesPage(String recipes) {
