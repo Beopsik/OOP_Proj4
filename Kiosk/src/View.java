@@ -69,7 +69,7 @@ public class View {
             System.out.println("4. Sauce");
             System.out.println("5. Beverage");
             System.out.println("6. Side Menu");
-            System.out.print("Select Component : ");
+            System.out.print("Select Component(number) : ");
             selectComponent = sc.nextInt();
 
             if(selectComponent == 1 || selectComponent == 2 || selectComponent == 3 ||

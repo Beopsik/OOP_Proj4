@@ -245,6 +245,49 @@ public class Recipe {
         }
     }
     public void modifyRecipes(String phoneNo){
+        Scanner sc = new Scanner(System.in);
+        String recipeName;
+        System.out.print("Select recipe for modifying(Input recipe name) : ");
+        recipeName = sc.nextLine();
+        System.out.println("Which component do you want to modify? ");
+        int component = view.selectComponentPage();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            String recipe = "";
+            while(true) {
+                String recipeLine = br.readLine();
+                if(recipeLine == null)
+                    break;
+                String[] recipeInfo = recipeLine.split("/");
+                if(recipeInfo[0] != phoneNo) {
+                    recipe += recipeLine + "\r\n";
+                }
+                else {
+                    if(recipeInfo[1] != recipeName)
+                        recipe += recipeLine + "\r\n";
+                    else {
+                        switch (component) {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        catch(IOException e) {
+            System.out.println(e);
+        }
 
     }
     public void deleteRecipes(String phoneNo){
