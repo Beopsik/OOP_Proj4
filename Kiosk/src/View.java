@@ -112,7 +112,7 @@ public class View {
                 }
             }
 
-            result+="Recipe Name:"+recipeName+" Recipe price:"+recipePrice;
+            result+="Recipe Name:"+recipeName+" Recipe price:"+recipePrice+"\n";
         }
         System.out.println(result);
 
