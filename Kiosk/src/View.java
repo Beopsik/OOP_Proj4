@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class View {
 
@@ -82,10 +84,25 @@ public class View {
     }
 
     void viewComponentsPage(String components) {
-
     }
 
     void viewRecipesPage(String recipes) {
+        String[] recipe=recipes.split("\n");
+        for(int i=0; i<recipe.length; i++) {
+            String[] components = recipe[i].split("/");
 
+            String recipeName=components[0];
+
+            int recipePrice=0;
+            Pattern pattern=Pattern.compile("_(([0-9])\\w+),");
+            for(int j=1; j<components.length; j++){
+                Matcher matcher=pattern.matcher(components[j]);
+                while (matcher.find()){
+                    recipePrice+=Integer.parseInt(matcher.group(1));
+                }
+            }
+
+            System.out.println("Recipe Name:"+recipeName+" Recipe price:"+recipePrice);
+        }
     }
 }
