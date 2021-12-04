@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import Component.*;
 
@@ -213,15 +215,72 @@ public class Recipe {
         return recipe;
     }
     public void saveRecipe(String recipe){
-
+        try {
+            FileWriter fw = new FileWriter("DB/recipe.txt", true);
+            fw.write(recipe + "\r\n");
+            fw.close();
+        }
+        catch(IOException e) {
+            System.out.println(e);
+        }
     }
     public String loadRecipe(String phoneNo){
-        return "result";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            String recipe = "";
+            while(true) {
+                String recipeLine = br.readLine();
+                if(recipeLine == null)
+                    break;
+                String[] recipeInfo = recipeLine.split("/");
+                if(recipeInfo[0] != phoneNo)
+                    continue;
+                else {
+                    recipe += recipeLine.substring(recipeInfo[0].length() + 1);
+                }
+            }
+            return recipe;
+        }
+        catch(IOException e) {
+            System.out.println(e);
+            return e.toString();
+        }
     }
-    public void modifyRecipes(){
+    public void modifyRecipes(String phoneNo){
 
     }
-    public void deleteRecipes(){
+    public void deleteRecipes(String phoneNo){
+        Scanner sc = new Scanner(System.in);
+        String deleteRecipes;
 
+        System.out.print("Select recipes for deleting(Input recipes' name) : ");
+        deleteRecipes = sc.nextLine();
+        String[] recipeList = deleteRecipes.split(" ");
+        ArrayList<String> deleteList = new ArrayList<String>(Arrays.asList(recipeList));
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            String recipe = "";
+            while(true) {
+                String recipeLine = br.readLine();
+                if(recipeLine == null)
+                    break;
+                String[] recipeInfo = recipeLine.split("/");
+                if(phoneNo != recipeInfo[0])
+                    recipe += recipeLine + "\r\n";
+                else {
+                    if(!deleteList.contains(recipeInfo[1]))
+                        recipe += recipeLine + "\r\n";
+                }
+            }
+
+            FileWriter fw = new FileWriter("DB/recipe.txt");
+            fw.write(recipe);
+            fw.close();
+            br.close();
+        }
+        catch(IOException e) {
+            System.out.println(e);
+        }
     }
 }

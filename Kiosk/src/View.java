@@ -23,12 +23,10 @@ public class View {
                     System.out.println("--------Select Menu--------");
                     System.out.println("1. Add Recipe");
                     System.out.println("2. Load Recipe");
-                    System.out.println("3. Modify Recipe");
-                    System.out.println("4. Delete Recipe");
                     System.out.print("Select Menu : ");
                     selectMenu = sc.nextInt();
 
-                    if(selectMenu == 1 || selectMenu == 2 || selectMenu == 3 || selectMenu == 4) {
+                    if(selectMenu == 1 || selectMenu == 2) {
                         break;
                     }
                     else {
@@ -88,100 +86,11 @@ public class View {
 
     void viewComponentsPage(String components) throws IOException {
 
-        BufferedReader br;
-        int i;
+        String[] eachComponents = components.split("\n");
 
-        switch(components) {
-            case "size":
-                br = new BufferedReader(new FileReader("DB/size.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
-            case "bread":
-                br = new BufferedReader(new FileReader("DB/bread.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
-            case "ingredient":
-                br = new BufferedReader(new FileReader("DB/ingredient.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
-            case "sauce":
-                br = new BufferedReader(new FileReader("DB/sauce.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
-            case "beverage":
-                br = new BufferedReader(new FileReader("DB/beverage.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
-            case "side":
-                br = new BufferedReader(new FileReader("DB/side.txt"));
-                i = 1;
-
-                while(true) {
-                    String line = br.readLine();
-                    if(line == null)
-                        break;
-                    String[] lineList = line.split(",");
-                    System.out.println(Integer.toString(i) + ". " + lineList[0] + " Price : " + lineList[1]);
-                    i++;
-                }
-
-                br.close();
-                break;
+        for(int i = 0;i < eachComponents.length;i++) {
+            String[] componentInfo = eachComponents[i].split(",");
+            System.out.println(componentInfo[0] + " Price : " + componentInfo[1]);
         }
     }
 
