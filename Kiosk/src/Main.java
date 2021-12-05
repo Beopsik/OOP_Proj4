@@ -1,7 +1,6 @@
 import Component.*;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -165,27 +164,27 @@ public class Main {
                     try {
                         int menuNum = view.viewMenuPage(userType);
 
-                    if(menuNum == 1) {
-                        order.order(recipe.addRecipes(phoneNo));
-                        return;
-                    }
-                    else if(menuNum == 2) {
-                        Scanner sc = new Scanner(System.in);
-                        int selectMenu;
-                        String result = view.viewRecipesPage(recipe.loadRecipe(phoneNo));
-
-                        if(result.equals("There is no recipe!!!")) {
-                            System.out.println();
-                            continue;
+                        if(menuNum == 1) {
+                            order.order(recipe.addRecipes(phoneNo));
+                            return;
                         }
+                        else if(menuNum == 2) {
+                            Scanner sc = new Scanner(System.in);
+                            int selectMenu;
+                            String result = view.viewRecipesPage(recipe.loadRecipe(phoneNo));
 
-                        System.out.println("--------Select Menu--------");
-                        System.out.println("1. Order");
-                        System.out.println("2. Modify recipes");
-                        System.out.println("3. Delete recipes");
-                        System.out.println("4. Cancel");
-                        selectMenu = sc.nextInt();
-                        sc.nextLine();
+                            if(result.equals("There is no recipe!!!")) {
+                                System.out.println();
+                                continue;
+                            }
+
+                            System.out.println("--------Select Menu--------");
+                            System.out.println("1. Order");
+                            System.out.println("2. Modify recipes");
+                            System.out.println("3. Delete recipes");
+                            System.out.println("4. Cancel");
+                            selectMenu = sc.nextInt();
+                            sc.nextLine();
 
                             switch(selectMenu) {
                                 case 1:
