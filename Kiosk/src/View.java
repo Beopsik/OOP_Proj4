@@ -39,7 +39,7 @@ public class View {
                     System.out.println("1. Add Component");
                     System.out.println("2. Modify Component");
                     System.out.println("3. Delete Component");
-                    System.out.println("4. Delete Component");
+                    System.out.println("4. Delete Customer Info");
                     System.out.println("5. Logout");
                     System.out.print("Select Menu : ");
                     selectMenu = sc.nextInt();
