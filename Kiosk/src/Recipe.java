@@ -385,10 +385,6 @@ public class Recipe {
                             }else if(componentNum==6){
                                 component=new Side();
                             }
-//                            else {
-//                                System.out.println("Modify recipe error [Wrong Input]");
-//                                return;
-//                            }
 
                             String componentAll=component.loadComponents();
                             String[] componentList=componentAll.split("\n");
