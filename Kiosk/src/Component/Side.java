@@ -54,7 +54,7 @@ public class Side implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/side.txt");
+        File file = new File("../DB/side.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -76,21 +76,23 @@ public class Side implements Component{
 
         System.out.print("Enter price of new side menu : ");
         int price = scan.nextInt();
+        scan.nextLine();
         setPrice(price);
 
         System.out.print("Enter amount of new side menu : ");
         int amount = scan.nextInt();
+        scan.nextLine();
         setAmount(amount);
 
         try{
-            File file = new File("DB/side.txt");
+            File file = new File("../DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(getName() + "," + getPrice() + "," + getAmount());
-            writer.newLine();
+            writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
+            
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,7 +104,7 @@ public class Side implements Component{
     public void modifyComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/side.txt");
+            File file = new File("../DB/side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -130,6 +132,7 @@ public class Side implements Component{
         System.out.println("3. Modify amount of side menu");
         System.out.print(">>");
         int input = scan.nextInt();
+        scan.nextLine();
 
         if(input == 1){
             System.out.print("Enter new side menu name : ");
@@ -139,23 +142,25 @@ public class Side implements Component{
         else if(input == 2){
             System.out.print("Enter new price of side menu : ");
             int newprice = scan.nextInt();
+            scan.nextLine();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
             System.out.print("Enter new amount of side menu : ");
             int newamount = scan.nextInt();
+            scan.nextLine();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("DB/side.txt");
+            File file = new File("../DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component side : list) {
-                writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount());
-                writer.newLine();
+                writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {
@@ -168,7 +173,7 @@ public class Side implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/side.txt");
+            File file = new File("../DB/side.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -195,14 +200,14 @@ public class Side implements Component{
         list.remove(i);
 
         try{
-            File file = new File("DB/side.txt");
+            File file = new File("../DB/side.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component side : list) {
-                writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount());
-                writer.newLine();
+                writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {

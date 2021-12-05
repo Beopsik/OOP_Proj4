@@ -1,0 +1,5 @@
+01044445555/test/size:16cm_1000,/bread:오트_2500,/ingredient:토마토_1000,/sauce:칠리_5000,/beverage:사이다_1000,/side:양념감자_5000,
+01012345678/test/size:16cm_1000,/bread:오트_2500,/ingredient:토마토_1000,양파_1500,/sauce:칠리_5000,/beverage:사이다_1000,/side:양념감자_5000,
+01093757150/park/size:16cm_1000,/bread:오트_2500,/ingredient:토마토_1000,/sauce:칠리_5000,/beverage:사이다_1000,/side:양념감자_5000,
+01011111111/kim/size:45cm_3000,/bread:오트_2500,/ingredient:양파_1500,/sauce:칠리_5000,/beverage:사이다_1000,/side:양념감자_5000,
+01022222222/moon/size:16cm_1000,/bread:오트_2500,/ingredient:토마토_1000,/sauce:칠리_5000,/beverage:사이다_1000,/side:양념감자_5000,

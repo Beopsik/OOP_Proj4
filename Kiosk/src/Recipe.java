@@ -27,7 +27,7 @@ public class Recipe {
         String recipe="";
         try {
             BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-            StringTokenizer st=new StringTokenizer(br.readLine());
+            StringTokenizer st;
 
             int select;
             String name;
@@ -43,9 +43,10 @@ public class Recipe {
             String[] sizeList=sizeAll.split("\n");
 
             view.viewComponentsPage(sizeAll);
+            st=new StringTokenizer(br.readLine());
             select=Integer.parseInt(st.nextToken());
 
-            String[] sizeInfo=sizeList[select].split(",");
+            String[] sizeInfo=sizeList[select-1].split(",");
             name=sizeInfo[0];
             price=sizeInfo[1];
 
@@ -64,9 +65,10 @@ public class Recipe {
             String[] breadList=breadAll.split("\n");
 
             view.viewComponentsPage(breadAll);
+            st=new StringTokenizer(br.readLine());
             select=Integer.parseInt(st.nextToken());
 
-            String[] breadInfo=breadList[select].split(",");
+            String[] breadInfo=breadList[select-1].split(",");
             name=breadInfo[0];
             price=breadInfo[1];
 
@@ -85,9 +87,10 @@ public class Recipe {
 
             view.viewComponentsPage(ingredientAll);
 
+            st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] ingredientInfo=ingredientList[select].split(",");
+                String[] ingredientInfo=ingredientList[select-1].split(",");
                 name=ingredientInfo[0];
                 price=ingredientInfo[1];
 
@@ -107,9 +110,10 @@ public class Recipe {
 
             view.viewComponentsPage(sauceAll);
 
+            st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] sauceInfo=sauceList[select].split(",");
+                String[] sauceInfo=sauceList[select-1].split(",");
                 name=sauceInfo[0];
                 price=sauceInfo[1];
 
@@ -129,9 +133,10 @@ public class Recipe {
 
             view.viewComponentsPage(beverageAll);
 
+            st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] beverageInfo=beverageList[select].split(",");
+                String[] beverageInfo=beverageList[select-1].split(",");
                 name=beverageInfo[0];
                 price=beverageInfo[1];
 
@@ -151,9 +156,10 @@ public class Recipe {
 
             view.viewComponentsPage(sideAll);
 
+            st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] sideInfo=sideList[select].split(",");
+                String[] sideInfo=sideList[select-1].split(",");
                 name=sideInfo[0];
                 price=sideInfo[1];
 
@@ -168,6 +174,7 @@ public class Recipe {
             while(true) {
                 System.out.println("Do you want to save?");
                 System.out.println("1. yes  2. no");
+                st=new StringTokenizer(br.readLine());
                 select = Integer.parseInt(st.nextToken());
                 if(select==1||select==2){
                     break;
@@ -179,6 +186,7 @@ public class Recipe {
             String recipeName;
             if(select==1){
                 System.out.println("Enter recipe name:");
+                st=new StringTokenizer(br.readLine());
                 recipeName=st.nextToken();
             }else{
                 recipeName="-";
@@ -211,7 +219,6 @@ public class Recipe {
                 recipe+=side.get(i).getName()+"_";
                 recipe+=side.get(i).getPrice()+",";
             }
-            recipe+="\n";
 
             if(select==1){
                 saveRecipe(phoneNo+"/"+recipe);
@@ -224,7 +231,7 @@ public class Recipe {
     }
     public void saveRecipe(String recipe){
         try {
-            FileWriter fw = new FileWriter("DB/recipe.txt", true);
+            FileWriter fw = new FileWriter("../DB/recipe.txt", true);
             fw.write(recipe + "\r\n");
             fw.close();
         }
@@ -234,17 +241,17 @@ public class Recipe {
     }
     public String loadRecipe(String phoneNo){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("../DB/recipe.txt"));
             String recipe = "";
             while(true) {
                 String recipeLine = br.readLine();
                 if(recipeLine == null)
                     break;
                 String[] recipeInfo = recipeLine.split("/");
-                if(recipeInfo[0] != phoneNo)
+                if(!recipeInfo[0].equals(phoneNo))
                     continue;
                 else {
-                    recipe += recipeLine.substring(recipeInfo[0].length() + 1);
+                    recipe += recipeLine.substring(recipeInfo[0].length() + 1)+ "\r\n";
                 }
             }
             return recipe;
@@ -274,18 +281,18 @@ public class Recipe {
         }
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("../DB/recipe.txt"));
             String recipe = "";
             while(true) {
                 String recipeLine = br.readLine();
                 if(recipeLine == null)
                     break;
                 String[] recipeInfo = recipeLine.split("/");
-                if(recipeInfo[0] != phoneNo) {
+                if(!recipeInfo[0].equals(phoneNo)) {
                     recipe += recipeLine + "\r\n";
                 }
                 else {
-                    if(recipeInfo[1] != recipeName)
+                    if(!recipeInfo[1].equals(recipeName))
                         recipe += recipeLine + "\r\n";
                     else {
                         String beforeTargetComponent="";
@@ -299,9 +306,9 @@ public class Recipe {
                         for(int i=componentNum+2; i<recipeInfo.length-1; i++){
                             afterTargetComponent += recipeInfo[i]+"/";
                         }
-                        afterTargetComponent += recipeInfo[recipeInfo.length-1]+"\n";
+                        afterTargetComponent += recipeInfo[recipeInfo.length-1];
 
-                        System.out.print(beforeTargetComponent+targetComponent+"/"+afterTargetComponent);
+                        System.out.println(beforeTargetComponent+targetComponent+"/"+afterTargetComponent);
                         if(selectOperation==1) {
                             if(componentNum==1){
                                 component=new Size();
@@ -317,7 +324,7 @@ public class Recipe {
                                 component=new Side();
                             }
                             else {
-                                System.out.println("Modify recipe error");
+                                System.out.println("Modify recipe error [Wrong Input]");
                                 return;
                             }
 
@@ -328,13 +335,13 @@ public class Recipe {
                             int select=sc.nextInt();
                             sc.nextLine();
 
-                            String[] componentInfo=componentList[select].split(",");
+                            String[] componentInfo=componentList[select-1].split(",");
                             String name=componentInfo[0];
                             String price=componentInfo[1];
 
                             targetComponent+=name+"_"+price+",/";
 
-                            recipeLine=beforeTargetComponent+targetComponent+afterTargetComponent;
+                            recipeLine=phoneNo+"/"+beforeTargetComponent+targetComponent+afterTargetComponent;
                             recipe += recipeLine + "\r\n";
                         }else if(selectOperation==2){
                             System.out.println("Input the name of what you want to delete.");
@@ -346,21 +353,25 @@ public class Recipe {
                             if(matcher.find()){
                                 willDelete=matcher.group();
                             }else{
-                                System.out.println("Modify recipe error [delete]");
+                                System.out.println("Modify recipe error [delete][nothing matches the name]");
                                 return;
                             }
                             targetComponent=targetComponent.replaceAll(willDelete, "");
                             targetComponent+="/";
 
-                            recipeLine=beforeTargetComponent+targetComponent+afterTargetComponent;
+                            recipeLine=phoneNo+"/"+beforeTargetComponent+targetComponent+afterTargetComponent;
                             recipe += recipeLine + "\r\n";
                         }else {
-                            System.out.println("Modify recipe error");
+                            System.out.println("Modify recipe error [Wrong Input]");
                             return;
                         }
                     }
                 }
             }
+            FileWriter fw = new FileWriter("../DB/recipe.txt");
+            fw.write(recipe);
+            fw.close();
+            br.close();
         }
         catch(IOException e) {
             System.out.println(e);
@@ -377,14 +388,14 @@ public class Recipe {
         ArrayList<String> deleteList = new ArrayList<String>(Arrays.asList(recipeList));
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("DB/recipe.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("../DB/recipe.txt"));
             String recipe = "";
             while(true) {
                 String recipeLine = br.readLine();
                 if(recipeLine == null)
                     break;
                 String[] recipeInfo = recipeLine.split("/");
-                if(phoneNo != recipeInfo[0])
+                if(!phoneNo.equals(recipeInfo[0]))
                     recipe += recipeLine + "\r\n";
                 else {
                     if(!deleteList.contains(recipeInfo[1]))
@@ -392,7 +403,7 @@ public class Recipe {
                 }
             }
 
-            FileWriter fw = new FileWriter("DB/recipe.txt");
+            FileWriter fw = new FileWriter("../DB/recipe.txt");
             fw.write(recipe);
             fw.close();
             br.close();

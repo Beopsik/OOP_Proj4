@@ -54,7 +54,7 @@ public class Size implements Component {
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/size.txt");
+        File file = new File("../DB/size.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -76,19 +76,20 @@ public class Size implements Component {
 
         System.out.print("Enter new price of size : ");
         int price = scan.nextInt();
+        scan.nextLine();
         setPrice(price);
 
         setAmount(0);
 
         try{
-            File file = new File("DB/size.txt");
+            File file = new File("../DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(getName() + "," + getPrice() + "," + getAmount());
-            writer.newLine();
+            writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
+            
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,9 +100,10 @@ public class Size implements Component {
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/size.txt");
+            File file = new File("../DB/size.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
+
             while((line = reader.readLine()) != null){
                 String[] box = line.split(",");
                 Size size = new Size(box[0], box[1], box[2]);
@@ -126,6 +128,7 @@ public class Size implements Component {
         System.out.println("2. Modify price of size");
         System.out.print(">>");
         int input = scan.nextInt();
+        scan.nextLine();
 
         if(input == 1){
             System.out.print("Enter new size : ");
@@ -135,18 +138,19 @@ public class Size implements Component {
         else if(input == 2){
             System.out.print("Enter price of new size : ");
             int newprice = scan.nextInt();
+            scan.nextLine();
             list.get(i).setPrice(newprice);
         }
 
         try{
-            File file = new File("DB/size.txt");
+            File file = new File("../DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component size : list) {
-                writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount());
-                writer.newLine();
+                writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {
@@ -159,7 +163,7 @@ public class Size implements Component {
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/size.txt");
+            File file = new File("../DB/size.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -186,14 +190,14 @@ public class Size implements Component {
         list.remove(i);
 
         try{
-            File file = new File("DB/size.txt");
+            File file = new File("../DB/size.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component size : list) {
-                writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount());
-                writer.newLine();
+                writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {

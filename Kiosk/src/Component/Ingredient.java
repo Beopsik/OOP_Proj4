@@ -54,7 +54,7 @@ public class Ingredient implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/ingredient.txt");
+        File file = new File("../DB/ingredient.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -76,21 +76,23 @@ public class Ingredient implements Component{
 
         System.out.print("Enter price of new ingredient : ");
         int price = scan.nextInt();
+        scan.nextLine();
         setPrice(price);
 
         System.out.print("Enter amount of new ingredient : ");
         int amount = scan.nextInt();
+        scan.nextLine();
         setAmount(amount);
 
         try{
-            File file = new File("DB/ingredient.txt");
+            File file = new File("../DB/ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(getName() + "," + getPrice() + "," + getAmount());
-            writer.newLine();
+            writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
+            
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +103,7 @@ public class Ingredient implements Component{
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/ingredient.txt");
+            File file = new File("../DB/ingredient.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -129,6 +131,7 @@ public class Ingredient implements Component{
         System.out.println("3. Modify amount of ingredient");
         System.out.print(">>");
         int input = scan.nextInt();
+        scan.nextLine();
 
         if(input == 1){
             System.out.print("Enter new ingredient name : ");
@@ -138,23 +141,25 @@ public class Ingredient implements Component{
         else if(input == 2){
             System.out.print("Enter new price of ingredient : ");
             int newprice = scan.nextInt();
+            scan.nextLine();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
             System.out.print("Enter new amount of ingredient : ");
             int newamount = scan.nextInt();
+            scan.nextLine();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("DB/ingredient.txt");
+            File file = new File("../DB/ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component ingredient : list) {
-                writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount());
-                writer.newLine();
+                writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {
@@ -167,7 +172,7 @@ public class Ingredient implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/ingredient.txt");
+            File file = new File("../DB/ingredient.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -194,14 +199,14 @@ public class Ingredient implements Component{
         list.remove(i);
 
         try{
-            File file = new File("DB/ingredient.txt");
+            File file = new File("../DB/ingredient.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component ingredient : list) {
-                writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount());
-                writer.newLine();
+                writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {

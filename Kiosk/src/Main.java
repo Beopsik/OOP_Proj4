@@ -18,6 +18,8 @@ public class Main {
         StringTokenizer st;
         try {
             view=new View();
+            recipe=new Recipe();
+            order=new Order();
 
             view.viewLoginPage();
             st=new StringTokenizer(br.readLine());
@@ -134,7 +136,7 @@ public class Main {
                         }
                     }
                     else if(menuNum == 4) {
-                        BufferedReader br1 = new BufferedReader(new FileReader("DB/customer.txt"));
+                        BufferedReader br1 = new BufferedReader(new FileReader("../DB/customer.txt"));
                         Scanner sc = new Scanner(System.in);
                         String customerPhoneNo;
                         while(true) {
@@ -173,12 +175,13 @@ public class Main {
                         System.out.println("2. Modify recipes");
                         System.out.println("3. Delete recipes");
                         selectMenu = sc.nextInt();
+                        sc.nextLine();
 
                         switch(selectMenu) {
                             case 1:
                                 String orders;
                                 String recipes = "";
-                                BufferedReader br2 = new BufferedReader(new FileReader("DB/recipe.txt"));
+                                BufferedReader br2 = new BufferedReader(new FileReader("../DB/recipe.txt"));
                                 System.out.print("Enter recipes' name you want to order : ");
                                 orders = sc.next();
                                 String[] orderList = orders.split(" ");
@@ -187,18 +190,24 @@ public class Main {
                                     if(recipeLine == null)
                                         break;
                                     String[] recipeInfo = recipeLine.split("/");
-                                    for(int i = 0;i < orderList.length;i++) {
-                                        if(orderList[i].equals(recipeInfo[1]))
-                                            recipes += recipeLine + "\r\n";
+                                    if(!recipeInfo[0].equals(phoneNo))
+                                        continue;
+                                    else {
+                                        for(int i = 0;i < orderList.length;i++) {
+                                            if(orderList[i].equals(recipeInfo[1]))
+                                                recipes += recipeLine.substring(recipeInfo[0].length() + 1) + "\r\n";
+                                        }
                                     }
                                 }
                                 br2.close();
                                 order.order(recipes);
                                 return;
                             case 2:
+                                view.viewRecipesPage(recipe.loadRecipe(phoneNo));
                                 recipe.modifyRecipes(phoneNo);
                                 break;
                             case 3:
+                                view.viewRecipesPage(recipe.loadRecipe(phoneNo));
                                 recipe.deleteRecipes(phoneNo);
                                 break;
                         }
@@ -217,7 +226,7 @@ public class Main {
         else {
             try {
                 boolean flag = false;
-                BufferedReader br = new BufferedReader(new FileReader("DB/customer.txt"));
+                BufferedReader br = new BufferedReader(new FileReader("../DB/customer.txt"));
                 while(true) {
                     String customerLine = br.readLine();
                     if(customerLine == null)
@@ -226,8 +235,8 @@ public class Main {
                         flag = true;
                 }
                 if(!flag) {
-                    FileWriter fw = new FileWriter("DB/customer.txt", true);
-                    fw.write(phoneNo);
+                    FileWriter fw = new FileWriter("../DB/customer.txt", true);
+                    fw.write(phoneNo+"\r\n");
                     fw.close();
                 }
                 br.close();
@@ -242,22 +251,22 @@ public class Main {
 
     private static void deleteCustomerInfo(String phoneNo){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("DB/customer.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("../DB/customer.txt"));
             String customer = "";
             while(true) {
                 String customerLine = br.readLine();
                 if(customerLine == null)
                     break;
-                if(customerLine != phoneNo)
+                if(!customerLine.equals(phoneNo))
                     customer += customerLine + "\r\n";
             }
             br.close();
 
-            FileWriter fw = new FileWriter("DB/customer.txt");
+            FileWriter fw = new FileWriter("../DB/customer.txt");
             fw.write(customer);
             fw.close();
 
-            BufferedReader br1 = new BufferedReader(new FileReader("DB/recipe.txt"));
+            BufferedReader br1 = new BufferedReader(new FileReader("../DB/recipe.txt"));
             String recipe = "";
             while(true) {
                 String recipeLine = br1.readLine();
@@ -269,7 +278,7 @@ public class Main {
             }
             br1.close();
 
-            FileWriter fw1 = new FileWriter("DB/recipe.txt");
+            FileWriter fw1 = new FileWriter("../DB/recipe.txt");
             fw1.write(recipe);
             fw1.close();
         }

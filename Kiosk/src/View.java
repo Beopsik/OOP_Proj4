@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -25,6 +23,7 @@ public class View {
                     System.out.println("2. Load Recipe");
                     System.out.print("Select Menu : ");
                     selectMenu = sc.nextInt();
+                    sc.nextLine();
 
                     if(selectMenu == 1 || selectMenu == 2) {
                         break;
@@ -44,6 +43,7 @@ public class View {
                     System.out.println("5. Logout");
                     System.out.print("Select Menu : ");
                     selectMenu = sc.nextInt();
+                    sc.nextLine();
 
                     if(selectMenu == 1 || selectMenu == 2 || selectMenu == 3 ||
                             selectMenu == 4 || selectMenu == 5) {
@@ -73,6 +73,7 @@ public class View {
             System.out.println("6. Side Menu");
             System.out.print("Select Component(number) : ");
             selectComponent = sc.nextInt();
+            sc.nextLine();
 
             if(selectComponent == 1 || selectComponent == 2 || selectComponent == 3 ||
             selectComponent == 4 || selectComponent == 5 || selectComponent == 6) {
@@ -92,7 +93,7 @@ public class View {
 
         for(int i = 0;i < eachComponents.length;i++) {
             String[] componentInfo = eachComponents[i].split(",");
-            System.out.println(componentInfo[0] + " Price : " + componentInfo[1] + " amount : " + componentInfo[2]);
+            System.out.println(Integer.toString(i + 1) +". "+ componentInfo[0] + " Price : " + componentInfo[1] + " amount : " + componentInfo[2]);
         }
     }
 

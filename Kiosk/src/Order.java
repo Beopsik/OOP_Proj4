@@ -11,7 +11,7 @@ public class Order {
     public void order(String recipes){
         try {
             BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-            StringTokenizer st=new StringTokenizer(br.readLine());
+            StringTokenizer st;
 
             String result=view.viewRecipesPage(recipes);
 
@@ -19,6 +19,7 @@ public class Order {
             while(true) {
                 System.out.println("Is the order information correct?");
                 System.out.println("1. yes  2. no");
+                st=new StringTokenizer(br.readLine());
                 checkOrder=Integer.parseInt(st.nextToken());
 
                 if(checkOrder==1||checkOrder==2){

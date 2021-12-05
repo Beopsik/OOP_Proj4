@@ -1,7 +1,8 @@
 package Component;
 
 import java.io.*;
-import java.nio.Buffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class Bread implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("DB/bread.txt");
+        File file = new File("../DB/bread.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -77,21 +78,25 @@ public class Bread implements Component{
 
         System.out.print("Enter price of new bread : ");
         int price = scan.nextInt();
+        scan.nextLine();
         setPrice(price);
 
         System.out.print("Enter amount of new bread : ");
         int amount = scan.nextInt();
+        scan.nextLine();
         setAmount(amount);
 
+        Path relativePath = Paths.get("");
+        String path = relativePath.toAbsolutePath().toString();
+        System.out.println("Working Directory = " + path);
         try{
-            File file = new File("DB/bread.txt");
+            File file = new File("../DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
-
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(getName() + "," + getPrice() + "," + getAmount());
-            writer.newLine();
+            writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
+            
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,7 +107,7 @@ public class Bread implements Component{
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/bread.txt");
+            File file = new File("../DB/bread.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -130,6 +135,7 @@ public class Bread implements Component{
         System.out.println("3. Modify amount of bread");
         System.out.print(">>");
         int input = scan.nextInt();
+        scan.nextLine();
 
         if(input == 1){
             System.out.print("Enter new bread name : ");
@@ -139,23 +145,25 @@ public class Bread implements Component{
         else if(input == 2){
             System.out.print("Enter new price of bread : ");
             int newprice = scan.nextInt();
+            scan.nextLine();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
             System.out.print("Enter new amount of bread : ");
             int newamount = scan.nextInt();
+            scan.nextLine();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("DB/bread.txt");
+            File file = new File("../DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component bread : list) {
-                writer.write(bread.getName() + "," + bread.getPrice() + "," + bread.getAmount());
-                writer.newLine();
+                writer.write(bread.getName() + "," + bread.getPrice() + "," + bread.getAmount()+"\r\n");
+                
             }
             writer.close();
         } catch (IOException e) {
@@ -168,7 +176,7 @@ public class Bread implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("DB/bread.txt");
+            File file = new File("../DB/bread.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -195,14 +203,14 @@ public class Bread implements Component{
         list.remove(i);
 
         try{
-            File file = new File("DB/bread.txt");
+            File file = new File("../DB/bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component bread : list) {
-                writer.write(bread.getName() + "," + bread.getPrice() + "," + bread.getAmount());
-                writer.newLine();
+                writer.write(bread.getName() + "," + bread.getPrice() + "," + bread.getAmount()+"\r\n");
+
             }
             writer.close();
         } catch (IOException e) {
