@@ -1,0 +1,2 @@
+Recipe Name:hoho Recipe price:12000
+Recipe Name:haha Recipe price:14000

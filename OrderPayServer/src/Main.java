@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static java.lang.Thread.sleep;
+
 public class Main {
     public static void main(String[] args) {
         try {
@@ -24,10 +26,12 @@ public class Main {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
                 // BufferedReader에 위 InputStream을 담아 사용
 
-                String str="";
-                while(!(str=reader.readLine()).equals("EOF")) {
-                    System.out.println(str);
+                String orderRequest="";
+                String orderStr="";
+                while(!(orderStr=reader.readLine()).equals("EOF")) {
+                    orderRequest+=orderStr+"\n";
                 }
+                System.out.println(orderRequest);
                 // 클라이언트에서 온 메세지 확인
 
                 // OutputStream - 서버에서 클라이언트로
@@ -36,12 +40,43 @@ public class Main {
                 PrintWriter writer = new PrintWriter(out, true);
                 // BufferedReader에 위 InputStream을 담아 사용
 
-                writer.println("SERVER TO CLIENT");
+//                writer.println("SERVER TO CLIENT");
+                String orderResponse=orderRequest;
+                writer.println(orderResponse+"EOF");
                 // 서버에서 클라이언트로 메세지 보내기
 
+//                input = socketUser.getInputStream();
+//                reader = new BufferedReader(new InputStreamReader(input));
+
+                String payRequest="";
+                String payStr="";
+                while(!(payStr=reader.readLine()).equals("EOF")) {
+                    payRequest+=payStr;
+                }
+
+                if(payRequest.equals("yes")){
+                    System.out.println("Payment start and saved");
+//                    out = socketUser.getOutputStream();
+//                    writer = new PrintWriter(out, true);
+                    writer.println("Paying...\n"+"EOF");
+                    //저장
+                    FileWriter fw = new FileWriter("../DB/order.txt", true);
+                    fw.write(orderResponse);
+                    fw.close();
+                    sleep(3000);
+//                    out = socketUser.getOutputStream();
+//                    writer = new PrintWriter(out, true);
+                    writer.println("Payment completed\n"+"EOF");
+                    System.out.println("Payment completed");
+                    System.out.println("--------------------------");
+                }else if(payRequest.equals("no")){
+                    System.out.println("Payment failed");
+                    System.out.println("--------------------------");
+                    continue;
+                }
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
