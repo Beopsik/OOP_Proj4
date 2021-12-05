@@ -192,17 +192,22 @@ public class Beverage implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter beverage name you want to delete : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter beverage name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component beverage : list){
-            if(name.equals(beverage.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component beverage : list){
+                if(!name.equals(beverage.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The beverage does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
@@ -223,6 +228,6 @@ public class Beverage implements Component{
 
     @Override
     public void displayComponents() {
-        System.out.println("음료 이름 : " + this.getName() + ", 음료 가격 : " + this.getPrice() + ", 음료 양 : " + this.getAmount());
+        System.out.println("Beverage name : " + this.getName() + ", Beverage price : " + this.getPrice() + ", Beverage amount : " + this.getAmount());
     }
 }

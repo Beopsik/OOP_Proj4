@@ -194,17 +194,22 @@ public class Side implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter side menu name you want to delete : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter side menu name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component side : list){
-            if(name.equals(side.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component side : list){
+                if(!name.equals(side.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The side menu does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
@@ -225,6 +230,6 @@ public class Side implements Component{
 
     @Override
     public void displayComponents() {
-        System.out.println("사이드메뉴 이름 : " + this.getName() + ", 사이드메뉴 가격 : " + this.getPrice() + ", 사이드메뉴 양 : " + this.getAmount());
+        System.out.println("Side menu name : " + this.getName() + ", Side menu price : " + this.getPrice() + ", Side menu amount : " + this.getAmount());
     }
 }

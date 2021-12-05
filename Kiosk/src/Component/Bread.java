@@ -1,8 +1,6 @@
 package Component;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -86,9 +84,6 @@ public class Bread implements Component{
         scan.nextLine();
         setAmount(amount);
 
-        Path relativePath = Paths.get("");
-        String path = relativePath.toAbsolutePath().toString();
-        System.out.println("Working Directory = " + path);
         try{
             File file = new File("../DB/bread.txt");
             if(!file.exists()){
@@ -197,17 +192,22 @@ public class Bread implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter bread name you want to delete : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter bread name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component bread : list){
-            if(name.equals(bread.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component bread : list){
+                if(!name.equals(bread.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The bread does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
@@ -228,6 +228,6 @@ public class Bread implements Component{
 
     @Override
     public void displayComponents() {
-        System.out.println("빵 이름 : " + this.getName() + ", 빵 가격 : " + this.getPrice() + ", 빵의 갯수 : " + this.getAmount());
+        System.out.println("Bread Name : " + this.getName() + ", Bread price : " + this.getPrice() + ", Bread amount : " + this.getAmount());
     }
 }

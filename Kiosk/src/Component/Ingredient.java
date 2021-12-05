@@ -193,17 +193,22 @@ public class Ingredient implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter ingredient name you want to delete : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter ingredient name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component ingredient : list){
-            if(name.equals(ingredient.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component ingredient : list){
+                if(!name.equals(ingredient.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The ingredient does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
@@ -224,7 +229,7 @@ public class Ingredient implements Component{
 
     @Override
     public void displayComponents() {
-        System.out.println("재료 이름 : " + this.getName() + ", 재료 가격 : " + this.getPrice() + ", 재료의 양 : " + this.getAmount());
+        System.out.println("Ingredient name : " + this.getName() + ", Ingredient price : " + this.getPrice() + ", Ingredient amount : " + this.getAmount());
     }
 }
 

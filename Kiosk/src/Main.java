@@ -220,6 +220,8 @@ public class Main {
                                     view.viewRecipesPage(recipe.loadRecipe(phoneNo));
                                     recipe.deleteRecipes(phoneNo);
                                     break;
+                                case 4:
+                                    return;
                                 default:
                                     System.out.println("Wrong Input!!");
                                     break;

@@ -183,17 +183,22 @@ public class Size implements Component {
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter size you want to delete : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter size name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component size : list){
-            if(name.equals(size.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component size : list){
+                if(!name.equals(size.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The size does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
@@ -214,6 +219,6 @@ public class Size implements Component {
 
     @Override
     public void displayComponents() {
-        System.out.println("크기 : " + this.getName() + ", 크기의 가격 : " + this.getPrice() + ", 크기의 양 : " + this.getAmount());
+        System.out.println("Size : " + this.getName() + ", Size price : " + this.getPrice() + ", Size amount : " + this.getAmount());
     }
 }

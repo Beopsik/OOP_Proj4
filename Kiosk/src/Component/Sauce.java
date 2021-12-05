@@ -70,15 +70,15 @@ public class Sauce implements Component{
     @Override
     public void addComponents() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("추가할 소스의 이름 : ");
+        System.out.print("Enter new sauce name : ");
         String str = scan.nextLine();
         setName(str);
 
-        System.out.print("추가할 소스의 가격 : ");
+        System.out.print("Enter price of new sauce : ");
         int price = scan.nextInt();
         setPrice(price);
 
-        System.out.print("추가할 소스의 양 : ");
+        System.out.print("Enter amount of new sauce : ");
         int amount = scan.nextInt();
         setAmount(amount);
 
@@ -131,30 +131,30 @@ public class Sauce implements Component{
                 System.out.println("The sauce does not exist. Please try again.");
         }while(i == list.size());
 
-        System.out.println("1. 소스의 이름 수정하기");
-        System.out.println("2. 소스의 가격 수정하기");
-        System.out.println("3. 소스의 갯수 수정하기");
+        System.out.println("1. Modify sauce name");
+        System.out.println("2. Modify price of sauce");
+        System.out.println("3. Modify amount of sauce");
         System.out.print(">>");
         int input = scan.nextInt();
 
         if(input == 1){
-            System.out.print("수정한 소스의 이름 : ");
+            System.out.print("Enter new sauce name : ");
             str = scan.nextLine();
             list.get(i).setName(str);
         }
         else if(input == 2){
-            System.out.print("수정한 소스의 가격 : ");
+            System.out.print("Enter new price of sauce : ");
             int newprice = scan.nextInt();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
-            System.out.print("수정한 소스의 갯수 : ");
+            System.out.print("Enter new amount of sauce : ");
             int newamount = scan.nextInt();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
+            File file = new File("../DB/Sauce.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -174,7 +174,7 @@ public class Sauce implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
+            File file = new File("../DB/Sauce.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -186,22 +186,47 @@ public class Sauce implements Component{
             e.printStackTrace();
         }
 
+//        while (true) {
+//            Scanner scan = new Scanner(System.in);
+//            System.out.print("Enter sauce name you want to delete : ");
+//            String name = scan.nextLine();
+//            int i = 0;
+//            for (Component sauce : list) {
+//                if (name.equals(sauce.getName()))
+//                    break;
+//                else
+//                    i++;
+//            }
+//            if (i == list.size()) {
+//                System.out.println("The sauce does not exist. Please try again.");
+//            }
+//            else{
+//                list.remove(i);
+//                break;
+//            }
+//        }
+
         Scanner scan = new Scanner(System.in);
-        System.out.print("삭제할 소스 이름 : ");
-        String name = scan.nextLine();
-        int i = 0;
+        String name = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter sauce name you want to delete : ");
+            name = scan.nextLine();
 
-        for(Component sauce : list){
-            if(name.equals(sauce.getName()))
-                break;
-            else
-                i++;
-        }
+            for(Component sauce : list){
+                if(!name.equals(sauce.getName()))
+                    i++;
+                else break;
+            }
 
+            if(i == list.size())
+                System.out.println("The sauce does not exist. Please try again.");
+        }while(i == list.size());
         list.remove(i);
 
         try{
-            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
+            File file = new File("../DB/Sauce.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -218,6 +243,6 @@ public class Sauce implements Component{
 
     @Override
     public void displayComponents() {
-        System.out.println("소스 이름 : " + this.getName() + ", 소스 가격 : " + this.getPrice() + ", 소스 양 : " + this.getAmount());
+        System.out.println("Sauce name : " + this.getName() + ", Sauce price : " + this.getPrice() + ", Sauce amount : " + this.getAmount());
     }
 }
