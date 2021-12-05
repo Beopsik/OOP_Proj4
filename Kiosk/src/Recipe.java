@@ -454,21 +454,32 @@ public class Recipe {
         deleteRecipes = sc.nextLine();
         String[] recipeList = deleteRecipes.split(" ");
         ArrayList<String> deleteList = new ArrayList<String>(Arrays.asList(recipeList));
+        int before = 0, after = 0;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("../DB/recipe.txt"));
             String recipe = "";
             while(true) {
                 String recipeLine = br.readLine();
+                before++;
                 if(recipeLine == null)
                     break;
                 String[] recipeInfo = recipeLine.split("/");
-                if(!phoneNo.equals(recipeInfo[0]))
+                if(!phoneNo.equals(recipeInfo[0])) {
                     recipe += recipeLine + "\r\n";
-                else {
-                    if(!deleteList.contains(recipeInfo[1]))
-                        recipe += recipeLine + "\r\n";
+                    after++;
                 }
+                else {
+                    if(!deleteList.contains(recipeInfo[1])) {
+                        recipe += recipeLine + "\r\n";
+                        after++;
+                    }
+                }
+            }
+
+            if((before - 1 - recipeList.length) != after) {
+                System.out.println("Wrong Input!!!");
+                return;
             }
 
             FileWriter fw = new FileWriter("../DB/recipe.txt");
