@@ -96,7 +96,7 @@ public class Bread implements Component{
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
-            
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,15 +120,23 @@ public class Bread implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter bread name you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component bread : list){
-            if(str.equals(bread.getName())){
-                break;
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter bread name you want to modify : ");
+            str = scan.nextLine();
+
+            for(Component bread : list){
+                if(!str.equals(bread.getName()))
+                    i++;
+                else break;
             }
-            else i++;
-        }
+
+            if(i == list.size())
+                System.out.println("The bread does not exist. Please try again.");
+        }while(i == list.size());
+
 
         System.out.println("1. Modify bread name");
         System.out.println("2. Modify price of bread");
@@ -163,7 +171,7 @@ public class Bread implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component bread : list) {
                 writer.write(bread.getName() + "," + bread.getPrice() + "," + bread.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {

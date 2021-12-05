@@ -92,7 +92,7 @@ public class Beverage implements Component{
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
-            
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,15 +116,22 @@ public class Beverage implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter beverage name you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component beverage : list){
-            if(str.equals(beverage.getName())){
-                break;
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter beverage name you want to modify : ");
+            str = scan.nextLine();
+
+            for(Component beverage : list){
+                if(!str.equals(beverage.getName()))
+                    i++;
+                else break;
             }
-            else i++;
-        }
+
+            if(i == list.size())
+                System.out.println("The beverage does not exist. Please try again.");
+        }while(i == list.size());
 
         System.out.println("1. Modify beverage name");
         System.out.println("2. Modify price of beverage");
@@ -159,7 +166,7 @@ public class Beverage implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component beverage : list) {
                 writer.write(beverage.getName() + "," + beverage.getPrice() + "," + beverage.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -206,7 +213,7 @@ public class Beverage implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component beverage : list) {
                 writer.write(beverage.getName() + "," + beverage.getPrice() + "," + beverage.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {

@@ -54,7 +54,7 @@ public class Sauce implements Component{
     @Override
     public String loadComponents() {
         String contents = "";
-        File file = new File("../DB/sauce.txt");
+        File file = new File("../DB/Sauce.txt");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
@@ -70,22 +70,20 @@ public class Sauce implements Component{
     @Override
     public void addComponents() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter new sauce name : ");
+        System.out.print("추가할 소스의 이름 : ");
         String str = scan.nextLine();
         setName(str);
 
-        System.out.print("Enter price of new sauce : ");
+        System.out.print("추가할 소스의 가격 : ");
         int price = scan.nextInt();
-        scan.nextLine();
         setPrice(price);
 
-        System.out.print("Enter amount of new sauce : ");
+        System.out.print("추가할 소스의 양 : ");
         int amount = scan.nextInt();
-        scan.nextLine();
         setAmount(amount);
 
         try{
-            File file = new File("../DB/sauce.txt");
+            File file = new File("../DB/Sauce.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -103,7 +101,7 @@ public class Sauce implements Component{
     public void modifyComponents(){
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("../DB/sauce.txt");
+            File file = new File("../DB/Sauce.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -116,43 +114,47 @@ public class Sauce implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter sauce name you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component sauce : list){
-            if(str.equals(sauce.getName())){
-                break;
-            }
-            else i++;
-        }
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter sauce name you want to modify : ");
+            str = scan.nextLine();
 
-        System.out.println("1. Modify sauce name");
-        System.out.println("2. Modify price of sauce");
-        System.out.println("3. Modify amount of sauce");
+            for(Component sauce : list){
+                if(!str.equals(sauce.getName()))
+                    i++;
+                else break;
+            }
+
+            if(i == list.size())
+                System.out.println("The sauce does not exist. Please try again.");
+        }while(i == list.size());
+
+        System.out.println("1. 소스의 이름 수정하기");
+        System.out.println("2. 소스의 가격 수정하기");
+        System.out.println("3. 소스의 갯수 수정하기");
         System.out.print(">>");
         int input = scan.nextInt();
-        scan.nextLine();
 
         if(input == 1){
-            System.out.print("Enter new sauce name : ");
+            System.out.print("수정한 소스의 이름 : ");
             str = scan.nextLine();
             list.get(i).setName(str);
         }
         else if(input == 2){
-            System.out.print("Enter new price of sauce : ");
+            System.out.print("수정한 소스의 가격 : ");
             int newprice = scan.nextInt();
-            scan.nextLine();
             list.get(i).setPrice(newprice);
         }
         else if(input == 3){
-            System.out.print("Enter new amount of sauce : ");
+            System.out.print("수정한 소스의 갯수 : ");
             int newamount = scan.nextInt();
-            scan.nextLine();
             list.get(i).setAmount(newamount);
         }
 
         try{
-            File file = new File("../DB/sauce.txt");
+            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -172,7 +174,7 @@ public class Sauce implements Component{
     public void deleteComponents() {
         ArrayList<Component> list = new ArrayList<>();
         try{
-            File file = new File("../DB/sauce.txt");
+            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = reader.readLine()) != null){
@@ -185,7 +187,7 @@ public class Sauce implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter sauce name you want to delete : ");
+        System.out.print("삭제할 소스 이름 : ");
         String name = scan.nextLine();
         int i = 0;
 
@@ -199,7 +201,7 @@ public class Sauce implements Component{
         list.remove(i);
 
         try{
-            File file = new File("../DB/sauce.txt");
+            File file = new File("C:\\Users\\hanjonguk\\IdeaProjects\\OOPpro4\\Bread.txt");
             if(!file.exists()){
                 file.createNewFile();
             }

@@ -92,7 +92,7 @@ public class Side implements Component{
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
-            
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,15 +117,23 @@ public class Side implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter side menu name you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component side : list){
-            if(str.equals(side.getName())){
-                break;
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter side menu name you want to modify : ");
+            str = scan.nextLine();
+
+            for(Component side : list){
+                if(!str.equals(side.getName()))
+                    i++;
+                else break;
             }
-            else i++;
-        }
+
+            if(i == list.size())
+                System.out.println("The side menu does not exist. Please try again.");
+        }while(i == list.size());
+
 
         System.out.println("1. Modify side menu name");
         System.out.println("2. Modify price of side menu");
@@ -160,7 +168,7 @@ public class Side implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component side : list) {
                 writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -207,7 +215,7 @@ public class Side implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component side : list) {
                 writer.write(side.getName() + "," + side.getPrice() + "," + side.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -220,4 +228,3 @@ public class Side implements Component{
         System.out.println("사이드메뉴 이름 : " + this.getName() + ", 사이드메뉴 가격 : " + this.getPrice() + ", 사이드메뉴 양 : " + this.getAmount());
     }
 }
-

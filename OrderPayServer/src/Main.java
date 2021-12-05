@@ -24,7 +24,10 @@ public class Main {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
                 // BufferedReader에 위 InputStream을 담아 사용
 
-                System.out.println(reader.readLine());
+                String str="";
+                while(!(str=reader.readLine()).equals("EOF")) {
+                    System.out.println(str);
+                }
                 // 클라이언트에서 온 메세지 확인
 
                 // OutputStream - 서버에서 클라이언트로

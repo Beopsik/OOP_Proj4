@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.StringTokenizer;
 
 public class Order {
@@ -8,7 +9,7 @@ public class Order {
         this.view=new View();
     }
 
-    public void order(String recipes){
+    public void order(String recipes) throws Exception{
         try {
             BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
             StringTokenizer st;
@@ -38,7 +39,7 @@ public class Order {
                     PrintWriter writer = new PrintWriter(out, true);
                     // PrintWriter에 위 OutputStream을 담아 사용
 
-                    writer.println(result);
+                    writer.println(result+"EOF\n");
                     // 클라이언트에서 서버로 메세지 보내기
 
                     // InputStream - Server에서 보낸 메세지 클라이언트로 가져옴
@@ -52,9 +53,9 @@ public class Order {
                     System.out.println("CLIENT SOCKET CLOSE");
                     socket.close(); // 소켓 종료
             }else{
-                return;
+                throw new InvalidObjectException("Wrong order information");
             }
-        }catch (IOException e){
+        }catch (SocketException e){
             System.out.println(e);
         }
     }

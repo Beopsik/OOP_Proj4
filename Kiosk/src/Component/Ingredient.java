@@ -92,7 +92,7 @@ public class Ingredient implements Component{
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
-            
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,15 +116,23 @@ public class Ingredient implements Component{
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter ingredient name you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component ingredient : list){
-            if(str.equals(ingredient.getName())){
-                break;
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter ingredient name you want to modify : ");
+            str = scan.nextLine();
+
+            for(Component ingredient : list){
+                if(!str.equals(ingredient.getName()))
+                    i++;
+                else break;
             }
-            else i++;
-        }
+
+            if(i == list.size())
+                System.out.println("The ingredient does not exist. Please try again.");
+        }while(i == list.size());
+
 
         System.out.println("1. Modify ingredient name");
         System.out.println("2. Modify price of ingredient");
@@ -159,7 +167,7 @@ public class Ingredient implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component ingredient : list) {
                 writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -206,7 +214,7 @@ public class Ingredient implements Component{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component ingredient : list) {
                 writer.write(ingredient.getName() + "," + ingredient.getPrice() + "," + ingredient.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -219,4 +227,5 @@ public class Ingredient implements Component{
         System.out.println("재료 이름 : " + this.getName() + ", 재료 가격 : " + this.getPrice() + ", 재료의 양 : " + this.getAmount());
     }
 }
+
 

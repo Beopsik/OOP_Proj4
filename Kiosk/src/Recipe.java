@@ -1,10 +1,7 @@
 import Component.Component;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +14,7 @@ public class Recipe {
         this.view=new View();
     }
 
-    public String addRecipes(String phoneNo){
+    public String addRecipes(String phoneNo) throws Exception{
         ArrayList<Component> size=new ArrayList<Component>();
         ArrayList<Component> bread=new ArrayList<Component>();
         ArrayList<Component> ingredient=new ArrayList<Component>();
@@ -43,19 +40,24 @@ public class Recipe {
             String[] sizeList=sizeAll.split("\n");
 
             view.viewComponentsPage(sizeAll);
+            System.out.print("Enter number: ");
             st=new StringTokenizer(br.readLine());
             select=Integer.parseInt(st.nextToken());
 
-            String[] sizeInfo=sizeList[select-1].split(",");
-            name=sizeInfo[0];
-            price=sizeInfo[1];
+            if(select>=1&&select<=sizeList.length) {
+                String[] sizeInfo = sizeList[select - 1].split(",");
+                name = sizeInfo[0];
+                price = sizeInfo[1];
 
-            forAdd=new Size();
-            forAdd.setName(name);
-            forAdd.setPrice(Integer.parseInt(price));
+                forAdd = new Size();
+                forAdd.setName(name);
+                forAdd.setPrice(Integer.parseInt(price));
 
-            size.add(forAdd);
-
+                size.add(forAdd);
+            }else{
+                throw new NoSuchElementException("Wrong Input! [size]");
+            }
+            System.out.println();
 
             /*
              * 빵 선택 및 선택 저장
@@ -65,18 +67,24 @@ public class Recipe {
             String[] breadList=breadAll.split("\n");
 
             view.viewComponentsPage(breadAll);
+            System.out.print("Enter number: ");
             st=new StringTokenizer(br.readLine());
             select=Integer.parseInt(st.nextToken());
 
-            String[] breadInfo=breadList[select-1].split(",");
-            name=breadInfo[0];
-            price=breadInfo[1];
+            if(select>=1&&select<= breadList.length) {
+                String[] breadInfo = breadList[select - 1].split(",");
+                name = breadInfo[0];
+                price = breadInfo[1];
 
-            forAdd=new Bread();
-            forAdd.setName(name);
-            forAdd.setPrice(Integer.parseInt(price));
+                forAdd = new Bread();
+                forAdd.setName(name);
+                forAdd.setPrice(Integer.parseInt(price));
 
-            bread.add(forAdd);
+                bread.add(forAdd);
+            }else{
+                throw new NoSuchElementException("Wrong Input! [bread]");
+            }
+            System.out.println();
 
             /*
              * 속재료 선택 및 선택 저장
@@ -87,19 +95,31 @@ public class Recipe {
 
             view.viewComponentsPage(ingredientAll);
 
+            System.out.print("Enter all number (0 is skip): ");
             st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] ingredientInfo=ingredientList[select-1].split(",");
-                name=ingredientInfo[0];
-                price=ingredientInfo[1];
+                if(select==0&&ingredient.size()==0) {
+                    break;
+                }else if(select==0&&ingredient.size()!=0){
+                    throw new NoSuchElementException("Wrong Input! [ingredient]");
+                }
 
-                forAdd=new Ingredient();
-                forAdd.setName(name);
-                forAdd.setPrice(Integer.parseInt(price));
+                if(select>=1&&select<= ingredientList.length) {
+                    String[] ingredientInfo = ingredientList[select - 1].split(",");
+                    name = ingredientInfo[0];
+                    price = ingredientInfo[1];
 
-                ingredient.add(forAdd);
+                    forAdd = new Ingredient();
+                    forAdd.setName(name);
+                    forAdd.setPrice(Integer.parseInt(price));
+
+                    ingredient.add(forAdd);
+                }else{
+                    throw new NoSuchElementException("Wrong Input! [ingredient]");
+                }
             }
+            System.out.println();
 
             /*
              * 소스 선택 및 선택 저장
@@ -110,19 +130,31 @@ public class Recipe {
 
             view.viewComponentsPage(sauceAll);
 
+            System.out.print("Enter all number (0 is skip): ");
             st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] sauceInfo=sauceList[select-1].split(",");
-                name=sauceInfo[0];
-                price=sauceInfo[1];
+                if(select==0&&sauce.size()==0) {
+                    break;
+                }else if(select==0&&sauce.size()!=0){
+                    throw new NoSuchElementException("Wrong Input! [sauce]");
+                }
 
-                forAdd=new Sauce();
-                forAdd.setName(name);
-                forAdd.setPrice(Integer.parseInt(price));
+                if(select>=1&&select<= sauceList.length) {
+                    String[] sauceInfo = sauceList[select - 1].split(",");
+                    name = sauceInfo[0];
+                    price = sauceInfo[1];
 
-                sauce.add(forAdd);
+                    forAdd = new Sauce();
+                    forAdd.setName(name);
+                    forAdd.setPrice(Integer.parseInt(price));
+
+                    sauce.add(forAdd);
+                }else{
+                    throw new NoSuchElementException("Wrong Input! [sauce]");
+                }
             }
+            System.out.println();
 
             /*
              * 음료수 선택 및 선택 저장
@@ -133,19 +165,31 @@ public class Recipe {
 
             view.viewComponentsPage(beverageAll);
 
+            System.out.print("Enter all number (0 is skip): ");
             st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] beverageInfo=beverageList[select-1].split(",");
-                name=beverageInfo[0];
-                price=beverageInfo[1];
+                if(select==0&&beverage.size()==0) {
+                    break;
+                }else if(select==0&&beverage.size()!=0){
+                    throw new NoSuchElementException("Wrong Input! [beverage]");
+                }
 
-                forAdd=new Beverage();
-                forAdd.setName(name);
-                forAdd.setPrice(Integer.parseInt(price));
+                if(select>=1&&select<= beverageList.length) {
+                    String[] beverageInfo = beverageList[select - 1].split(",");
+                    name = beverageInfo[0];
+                    price = beverageInfo[1];
 
-                beverage.add(forAdd);
+                    forAdd = new Beverage();
+                    forAdd.setName(name);
+                    forAdd.setPrice(Integer.parseInt(price));
+
+                    beverage.add(forAdd);
+                }else{
+                    throw new NoSuchElementException("Wrong Input! [beverage]");
+                }
             }
+            System.out.println();
 
             /*
              * 사이드 선택 및 선택 저장
@@ -156,19 +200,31 @@ public class Recipe {
 
             view.viewComponentsPage(sideAll);
 
+            System.out.print("Enter all number (0 is skip): ");
             st=new StringTokenizer(br.readLine());
             while(st.hasMoreTokens()) {
                 select = Integer.parseInt(st.nextToken());
-                String[] sideInfo=sideList[select-1].split(",");
-                name=sideInfo[0];
-                price=sideInfo[1];
+                if(select==0&&side.size()==0) {
+                    break;
+                }else if(select==0&&side.size()!=0){
+                    throw new NoSuchElementException("Wrong Input! [side]");
+                }
 
-                forAdd=new Side();
-                forAdd.setName(name);
-                forAdd.setPrice(Integer.parseInt(price));
+                if(select>=1&&select<= sizeList.length) {
+                    String[] sideInfo = sideList[select - 1].split(",");
+                    name = sideInfo[0];
+                    price = sideInfo[1];
 
-                side.add(forAdd);
+                    forAdd = new Side();
+                    forAdd.setName(name);
+                    forAdd.setPrice(Integer.parseInt(price));
+
+                    side.add(forAdd);
+                }else{
+                    throw new NoSuchElementException("Wrong Input! [side]");
+                }
             }
+            System.out.println();
 
 
             while(true) {
@@ -178,16 +234,18 @@ public class Recipe {
                 select = Integer.parseInt(st.nextToken());
                 if(select==1||select==2){
                     break;
-                }else{
+                }else {
                     System.out.println("Wrong input. Enter the number.");
                 }
             }
 
             String recipeName;
             if(select==1){
-                System.out.println("Enter recipe name:");
+                System.out.print("Enter recipe name:");
                 st=new StringTokenizer(br.readLine());
                 recipeName=st.nextToken();
+
+                System.out.println();
             }else{
                 recipeName="-";
             }
@@ -226,7 +284,6 @@ public class Recipe {
         }catch (IOException e){
             System.out.println(e);
         }
-
         return recipe;
     }
     public void saveRecipe(String recipe){
@@ -263,11 +320,15 @@ public class Recipe {
     }
     public void modifyRecipes(String phoneNo){
         Scanner sc = new Scanner(System.in);
+
+        boolean doModify=false;
         String recipeName;
         System.out.print("Select recipe for modifying(Input recipe name) : ");
         recipeName = sc.nextLine();
+
         System.out.println("Which component do you want to modify? ");
         int componentNum = view.selectComponentPage();
+
         int selectOperation;
         while (true) {
             System.out.println("1. Add  2. Delete");
@@ -295,6 +356,7 @@ public class Recipe {
                     if(!recipeInfo[1].equals(recipeName))
                         recipe += recipeLine + "\r\n";
                     else {
+                        doModify=true;
                         String beforeTargetComponent="";
                         String targetComponent="";
                         String afterTargetComponent="";
@@ -323,10 +385,10 @@ public class Recipe {
                             }else if(componentNum==6){
                                 component=new Side();
                             }
-                            else {
-                                System.out.println("Modify recipe error [Wrong Input]");
-                                return;
-                            }
+//                            else {
+//                                System.out.println("Modify recipe error [Wrong Input]");
+//                                return;
+//                            }
 
                             String componentAll=component.loadComponents();
                             String[] componentList=componentAll.split("\n");
@@ -335,14 +397,18 @@ public class Recipe {
                             int select=sc.nextInt();
                             sc.nextLine();
 
-                            String[] componentInfo=componentList[select-1].split(",");
-                            String name=componentInfo[0];
-                            String price=componentInfo[1];
+                            if(select>=1&&select<=componentList.length) {
+                                String[] componentInfo = componentList[select - 1].split(",");
+                                String name = componentInfo[0];
+                                String price = componentInfo[1];
 
-                            targetComponent+=name+"_"+price+",/";
+                                targetComponent += name + "_" + price + ",/";
 
-                            recipeLine=phoneNo+"/"+beforeTargetComponent+targetComponent+afterTargetComponent;
-                            recipe += recipeLine + "\r\n";
+                                recipeLine = phoneNo + "/" + beforeTargetComponent + targetComponent + afterTargetComponent;
+                                recipe += recipeLine + "\r\n";
+                            }else{
+                                throw new NoSuchElementException("Wrong Input! [modify]");
+                            }
                         }else if(selectOperation==2){
                             System.out.println("Input the name of what you want to delete.");
                             String name=sc.nextLine();
@@ -353,8 +419,7 @@ public class Recipe {
                             if(matcher.find()){
                                 willDelete=matcher.group();
                             }else{
-                                System.out.println("Modify recipe error [delete][nothing matches the name]");
-                                return;
+                                throw new NoSuchElementException("Modify recipe error [delete][nothing matches the name]");
                             }
                             targetComponent=targetComponent.replaceAll(willDelete, "");
                             targetComponent+="/";
@@ -367,6 +432,9 @@ public class Recipe {
                         }
                     }
                 }
+            }
+            if(!doModify){
+                throw new NoSuchElementException("Modify recipe error [nothing matches recipes name]");
             }
             FileWriter fw = new FileWriter("../DB/recipe.txt");
             fw.write(recipe);

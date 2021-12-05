@@ -89,7 +89,7 @@ public class Size implements Component {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(getName() + "," + getPrice() + "," + getAmount()+"\r\n");
-            
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,15 +114,22 @@ public class Size implements Component {
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter size you want to modify : ");
-        String str = scan.nextLine();
-        int i = 0;
-        for(Component size : list){
-            if(str.equals(size.getName())){
-                break;
+        String str = "";
+        int i;
+        do{
+            i = 0;
+            System.out.print("Enter size name you want to modify : ");
+            str = scan.nextLine();
+
+            for(Component size : list){
+                if(!str.equals(size.getName()))
+                    i++;
+                else break;
             }
-            else i++;
-        }
+
+            if(i == list.size())
+                System.out.println("The size does not exist. Please try again.");
+        }while(i == list.size());
 
         System.out.println("1. Modify size");
         System.out.println("2. Modify price of size");
@@ -150,7 +157,7 @@ public class Size implements Component {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component size : list) {
                 writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -197,7 +204,7 @@ public class Size implements Component {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for(Component size : list) {
                 writer.write(size.getName() + "," + size.getPrice() + "," + size.getAmount()+"\r\n");
-                
+
             }
             writer.close();
         } catch (IOException e) {
@@ -210,4 +217,3 @@ public class Size implements Component {
         System.out.println("크기 : " + this.getName() + ", 크기의 가격 : " + this.getPrice() + ", 크기의 양 : " + this.getAmount());
     }
 }
-

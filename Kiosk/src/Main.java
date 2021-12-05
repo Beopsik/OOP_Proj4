@@ -2,6 +2,7 @@ import Component.*;
 
 import java.io.*;
 import java.nio.Buffer;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -13,7 +14,7 @@ public class Main {
     private static Recipe recipe;
     private static Order order;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));;
         StringTokenizer st;
         try {
@@ -159,58 +160,67 @@ public class Main {
             }
             else {
                 while(true) {
-                    int menuNum = view.viewMenuPage(userType);
+                    try {
+                        int menuNum = view.viewMenuPage(userType);
 
-                    if(menuNum == 1) {
-                        order.order(recipe.addRecipes(phoneNo));
-                        return;
-                    }
-                    else if(menuNum == 2) {
-                        Scanner sc = new Scanner(System.in);
-                        int selectMenu;
-                        view.viewRecipesPage(recipe.loadRecipe(phoneNo));
+                        if(menuNum == 1) {
+                            order.order(recipe.addRecipes(phoneNo));
+                            return;
+                        }
+                        else if(menuNum == 2) {
+                            Scanner sc = new Scanner(System.in);
+                            int selectMenu;
+                            view.viewRecipesPage(recipe.loadRecipe(phoneNo));
 
-                        System.out.println("--------Select Menu--------");
-                        System.out.println("1. Order");
-                        System.out.println("2. Modify recipes");
-                        System.out.println("3. Delete recipes");
-                        selectMenu = sc.nextInt();
-                        sc.nextLine();
+                            System.out.println("--------Select Menu--------");
+                            System.out.println("1. Order");
+                            System.out.println("2. Modify recipes");
+                            System.out.println("3. Delete recipes");
+                            selectMenu = sc.nextInt();
+                            sc.nextLine();
 
-                        switch(selectMenu) {
-                            case 1:
-                                String orders;
-                                String recipes = "";
-                                BufferedReader br2 = new BufferedReader(new FileReader("../DB/recipe.txt"));
-                                System.out.print("Enter recipes' name you want to order : ");
-                                orders = sc.next();
-                                String[] orderList = orders.split(" ");
-                                while(true) {
-                                    String recipeLine = br2.readLine();
-                                    if(recipeLine == null)
-                                        break;
-                                    String[] recipeInfo = recipeLine.split("/");
-                                    if(!recipeInfo[0].equals(phoneNo))
-                                        continue;
-                                    else {
-                                        for(int i = 0;i < orderList.length;i++) {
-                                            if(orderList[i].equals(recipeInfo[1]))
-                                                recipes += recipeLine.substring(recipeInfo[0].length() + 1) + "\r\n";
+                            switch(selectMenu) {
+                                case 1:
+                                    String orders;
+                                    String recipes = "";
+                                    BufferedReader br2 = new BufferedReader(new FileReader("../DB/recipe.txt"));
+                                    System.out.print("Enter recipes' name you want to order : ");
+                                    orders = sc.nextLine();
+                                    String[] orderList = orders.split(" ");
+                                    while(true) {
+                                        String recipeLine = br2.readLine();
+                                        if(recipeLine == null)
+                                            break;
+                                        String[] recipeInfo = recipeLine.split("/");
+                                        if(!recipeInfo[0].equals(phoneNo))
+                                            continue;
+                                        else {
+                                            for(int i = 0;i < orderList.length;i++) {
+                                                if(orderList[i].equals(recipeInfo[1]))
+                                                    recipes += recipeLine.substring(recipeInfo[0].length() + 1) + "\r\n";
+                                            }
                                         }
                                     }
-                                }
-                                br2.close();
-                                order.order(recipes);
-                                return;
-                            case 2:
-                                view.viewRecipesPage(recipe.loadRecipe(phoneNo));
-                                recipe.modifyRecipes(phoneNo);
-                                break;
-                            case 3:
-                                view.viewRecipesPage(recipe.loadRecipe(phoneNo));
-                                recipe.deleteRecipes(phoneNo);
-                                break;
+                                    br2.close();
+                                    order.order(recipes);
+                                    return;
+                                case 2:
+                                    view.viewRecipesPage(recipe.loadRecipe(phoneNo));
+                                    recipe.modifyRecipes(phoneNo);
+                                    break;
+                                case 3:
+                                    view.viewRecipesPage(recipe.loadRecipe(phoneNo));
+                                    recipe.deleteRecipes(phoneNo);
+                                    break;
+                                default:
+                                    System.out.println("Wrong Input!!");
+                                    break;
+                            }
                         }
+                    }catch (NoSuchElementException e){
+                        System.out.println(e);
+                    }catch (InvalidObjectException e){
+                        System.out.println(e);
                     }
                 }
             }
