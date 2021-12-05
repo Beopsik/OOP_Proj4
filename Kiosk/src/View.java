@@ -115,7 +115,10 @@ public class View {
                 }
             }
 
-            result+="Recipe Name:"+recipeName+" Recipe price:"+recipePrice+"\n";
+            if(recipeName.equals(""))
+                result = "There is no recipe!!!";
+            else
+                result+="Recipe Name:"+recipeName+" Recipe price:"+recipePrice+"\n";
         }
         System.out.println(result);
 

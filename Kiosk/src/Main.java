@@ -5,6 +5,8 @@ import java.nio.Buffer;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     private static String phoneNo;
@@ -158,26 +160,32 @@ public class Main {
                     }
                 }
             }
-            else {
+            else if(userType.equals("customer")) {
                 while(true) {
                     try {
                         int menuNum = view.viewMenuPage(userType);
 
-                        if(menuNum == 1) {
-                            order.order(recipe.addRecipes(phoneNo));
-                            return;
-                        }
-                        else if(menuNum == 2) {
-                            Scanner sc = new Scanner(System.in);
-                            int selectMenu;
-                            view.viewRecipesPage(recipe.loadRecipe(phoneNo));
+                    if(menuNum == 1) {
+                        order.order(recipe.addRecipes(phoneNo));
+                        return;
+                    }
+                    else if(menuNum == 2) {
+                        Scanner sc = new Scanner(System.in);
+                        int selectMenu;
+                        String result = view.viewRecipesPage(recipe.loadRecipe(phoneNo));
 
-                            System.out.println("--------Select Menu--------");
-                            System.out.println("1. Order");
-                            System.out.println("2. Modify recipes");
-                            System.out.println("3. Delete recipes");
-                            selectMenu = sc.nextInt();
-                            sc.nextLine();
+                        if(result.equals("There is no recipe!!!")) {
+                            System.out.println();
+                            continue;
+                        }
+
+                        System.out.println("--------Select Menu--------");
+                        System.out.println("1. Order");
+                        System.out.println("2. Modify recipes");
+                        System.out.println("3. Delete recipes");
+                        System.out.println("4. Cancel");
+                        selectMenu = sc.nextInt();
+                        sc.nextLine();
 
                             switch(selectMenu) {
                                 case 1:
@@ -224,6 +232,10 @@ public class Main {
                     }
                 }
             }
+            else if(userType.equals("error")) {
+                System.out.println("Wrong Input!!!");
+                return;
+            }
         }catch (Exception e){
             System.out.println(e);
         }
@@ -234,6 +246,11 @@ public class Main {
             return "admin";
         }
         else {
+            Pattern pattern = Pattern.compile("010([0-9]{8})");
+            Matcher matcher = pattern.matcher(phoneNo);
+            if(!matcher.find())
+                return "error";
+
             try {
                 boolean flag = false;
                 BufferedReader br = new BufferedReader(new FileReader("../DB/customer.txt"));
@@ -283,7 +300,7 @@ public class Main {
                 if(recipeLine == null)
                     break;
                 String[] recipeInfo = recipeLine.split("/");
-                if(recipeInfo[0] != phoneNo)
+                if(!recipeInfo[0].equals(phoneNo))
                     recipe += recipeLine + "\r\n";
             }
             br1.close();
